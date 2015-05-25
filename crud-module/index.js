@@ -1,3 +1,4 @@
+console.log('oi crud');
 'use strict';
 var util = require('util'),
 	inflections = require('underscore.inflections'),
@@ -51,7 +52,7 @@ var ModuleGenerator = yeoman.generators.NamedBase.extend({
 			message: 'Would you like to add the CRUD module links to a menu?',
 			default: true
 		}];
-
+console.log('oi prompt');
 		this.prompt(prompts, function(props) {
 			this.addCSSFolder = this._.contains(props.folders, 'addCSSFolder');
 			this.addImagesFolder = this._.contains(props.folders, 'addImagesFolder');
@@ -70,8 +71,8 @@ var ModuleGenerator = yeoman.generators.NamedBase.extend({
 
 			var prompts = [{
 				name: 'menuId',
-				message: 'What is your menu identifier(Leave it empty and press ENTER for the default "topbar" menu)?',
-				default: 'topbar'
+				message: 'What is your menu identifier(Leave it empty and press ENTER for the default "sidebar" menu)?',
+				default: 'sidebar'
 			}];
 
 			this.prompt(prompts, function(props) {

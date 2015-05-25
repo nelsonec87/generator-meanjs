@@ -1,12 +1,13 @@
+console.log('oi');
 'use strict';
 var util = require('util'),
 	path = require('path'),
 	yeoman = require('yeoman-generator'),
 	chalk = require('chalk');
 
-
 var MeanGenerator = yeoman.generators.Base.extend({
 	init: function() {
+		console.log('oi', 'init');
 		// read the local package file
 		this.pkg = yeoman.file.readJSON(path.join(__dirname, '../package.json'));
 

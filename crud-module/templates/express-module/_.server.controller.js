@@ -3,26 +3,24 @@
 /**
  * Module dependencies.
  */
-var mongoose = require('mongoose'),
-	errorHandler = require('./errors.server.controller'),
-	<%= classifiedSingularName %> = mongoose.model('<%= classifiedSingularName %>'),
+var errorHandler = require('./errors.server.controller'),
+	db = require('../../config/mysql'),
+	<%= classifiedSingularName %> = db.<%= classifiedSingularName %>,
 	_ = require('lodash');
 
 /**
  * Create a <%= humanizedSingularName %>
  */
 exports.create = function(req, res) {
-	var <%= camelizedSingularName %> = new <%= classifiedSingularName %>(req.body);
-	<%= camelizedSingularName %>.user = req.user;
+	var <%= camelizedSingularName %> = <%= classifiedSingularName %>.build(req.body);
+	<%= camelizedSingularName %>.UserId = req.user.id;
 
-	<%= camelizedSingularName %>.save(function(err) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
+<%= camelizedSingularName %>.save().then(function() {
 			res.jsonp(<%= camelizedSingularName %>);
-		}
+	}).catch(function(err){
+		return res.status(400).send({
+			message: errorHandler.getErrorMessage(err)
+		});
 	});
 };
 
@@ -41,14 +39,12 @@ exports.update = function(req, res) {
 
 	<%= camelizedSingularName %> = _.extend(<%= camelizedSingularName %> , req.body);
 
-	<%= camelizedSingularName %>.save(function(err) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			res.jsonp(<%= camelizedSingularName %>);
-		}
+	<%= camelizedSingularName %>.save().then(function(err) {
+		res.jsonp(<%= camelizedSingularName %>);
+	}).catch(function(err){
+		return res.status(400).send({
+			message: errorHandler.getErrorMessage(err)
+		});
 	});
 };
 
@@ -58,14 +54,12 @@ exports.update = function(req, res) {
 exports.delete = function(req, res) {
 	var <%= camelizedSingularName %> = req.<%= camelizedSingularName %> ;
 
-	<%= camelizedSingularName %>.remove(function(err) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			res.jsonp(<%= camelizedSingularName %>);
-		}
+	<%= camelizedSingularName %>.destroy().then(function() {
+		res.jsonp(<%= camelizedSingularName %>);
+	}).catch(function(err) {
+		return res.status(400).send({
+			message: errorHandler.getErrorMessage(err)
+		});
 	});
 };
 
@@ -73,14 +67,15 @@ exports.delete = function(req, res) {
  * List of <%= humanizedPluralName %>
  */
 exports.list = function(req, res) { 
-	<%= classifiedSingularName %>.find().sort('-created').populate('user', 'displayName').exec(function(err, <%= camelizedPluralName %>) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			res.jsonp(<%= camelizedPluralName %>);
-		}
+	<%= classifiedSingularName %>.findAll({
+		include: [{ model: db.User, attributes: ['displayName'] }],
+		order: [['createdAt', 'DESC']]
+	}).then(function(<%= camelizedPluralName %>) {
+		res.jsonp(<%= camelizedPluralName %>);
+	}).catch(function(err){
+		return res.status(400).send({
+			message: errorHandler.getErrorMessage(err)
+		});
 	});
 };
 
@@ -88,19 +83,24 @@ exports.list = function(req, res) {
  * <%= humanizedSingularName %> middleware
  */
 exports.<%= camelizedSingularName %>ByID = function(req, res, next, id) { 
-	<%= classifiedSingularName %>.findById(id).populate('user', 'displayName').exec(function(err, <%= camelizedSingularName %>) {
-		if (err) return next(err);
-		if (! <%= camelizedSingularName %>) return next(new Error('Failed to load <%= humanizedSingularName %> ' + id));
-		req.<%= camelizedSingularName %> = <%= camelizedSingularName %> ;
-		next();
-	});
+	<%= classifiedSingularName %>.find({
+			where: { id: id },
+			include: [{ model: db.User, attributes: ['displayName'] }]
+		}).then(function(<%= camelizedSingularName %>) {
+			if (! <%= camelizedSingularName %>) 
+				return next(new Error('Failed to load <%= humanizedSingularName %> ' + id));
+			req.<%= camelizedSingularName %> = <%= camelizedSingularName %> ;
+			next();
+		}).catch(function(err){
+			return next(err);
+		});
 };
 
 /**
  * <%= humanizedSingularName %> authorization middleware
  */
 exports.hasAuthorization = function(req, res, next) {
-	if (req.<%= camelizedSingularName %>.user.id !== req.user.id) {
+	if (req.<%= camelizedSingularName %>.UserId !== req.user.id) {
 		return res.status(403).send('User is not authorized');
 	}
 	next();
