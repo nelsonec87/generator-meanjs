@@ -9,7 +9,7 @@ angular.module('<%= slugifiedPluralName %>').controller('<%= classifiedPluralNam
 		$scope.create = function() {
 			// Create new <%= humanizedSingularName %> object
 			var <%= camelizedSingularName %> = new <%= classifiedPluralName %> ({
-				name: this.name
+				nome: this.nome
 			});
 
 			// Redirect after save
@@ -17,7 +17,7 @@ angular.module('<%= slugifiedPluralName %>').controller('<%= classifiedPluralNam
 				$location.path('<%= slugifiedPluralName %>/' + response.id);
 
 				// Clear form fields
-				$scope.name = '';
+				$scope.nome = '';
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});

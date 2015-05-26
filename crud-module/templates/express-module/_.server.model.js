@@ -3,9 +3,9 @@
 
 module.exports = function (sequelize, DataTypes) {
 	return sequelize.define('<%= classifiedSingularName %>', {
-		name: {
+		nome: {
 			type: DataTypes.STRING,
-			validate: { notEmpty: { msg: 'Name cannot be blank' } }
+			validate: { notEmpty: { msg: 'Nome é obrigatório' } }
 		}
 	}, {
 			classMethods: {

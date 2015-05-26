@@ -8,19 +8,19 @@
 		</a>
 	</div>
 	
-	{{<%= camelizedSingularName %>.name}}
+	{{<%= camelizedSingularName %>.nome}}
 </h3>
 <section data-ng-init="findOne()">
 	<small>
 		<em class="text-muted">
-			Posted on
+			Criado em
 			<span data-ng-bind="<%= camelizedSingularName %>.createdAt | date:'mediumDate'"></span>
-			by
+			por
 			<span data-ng-bind="<%= camelizedSingularName %>.User.displayName"></span>
 		</em>
 	</small>
 	<br /><br />
 	
-	<p class="lead">Another field</p>
-	<p class="lead">And another</p>
+	<p class="lead">Outro campo</p>
+	<p class="lead">Outro campo</p>
 </section>
