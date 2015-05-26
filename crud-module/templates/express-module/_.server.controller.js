@@ -15,8 +15,8 @@ exports.create = function(req, res) {
 	var <%= camelizedSingularName %> = <%= classifiedSingularName %>.build(req.body);
 	<%= camelizedSingularName %>.UserId = req.user.id;
 
-<%= camelizedSingularName %>.save().then(function() {
-			res.jsonp(<%= camelizedSingularName %>);
+	<%= camelizedSingularName %>.save().then(function() {
+		res.jsonp(<%= camelizedSingularName %>);
 	}).catch(function(err){
 		return res.status(400).send({
 			message: errorHandler.getErrorMessage(err)

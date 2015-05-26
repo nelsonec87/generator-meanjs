@@ -5,6 +5,7 @@ module.exports = function (sequelize, DataTypes) {
 	return sequelize.define('<%= classifiedSingularName %>', {
 		nome: {
 			type: DataTypes.STRING,
+			allowNull: false,
 			validate: { notEmpty: { msg: 'Nome é obrigatório' } }
 		}
 	}, {

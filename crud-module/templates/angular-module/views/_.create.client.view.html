@@ -1,9 +1,9 @@
 <h3>Novo <%= humanizedSingularName %></h3>
 <section data-ng-controller="<%= classifiedPluralName %>Controller">
        <div class="col-md-12">
-        <form name="<%= camelizedSingularName %>Form" class="form-horizontal" data-ng-submit="create()" novalidate>
+        <form name="<%= camelizedSingularName %>Form" class="form-horizontal" data-ng-submit="create(<%= camelizedSingularName %>Form)" novalidate>
 			<fieldset>
-				<div class="form-group" ng-class="{ 'has-error': <%= camelizedSingularName %>Form.nome.$dirty && <%= camelizedSingularName %>Form.nome.$invalid }">
+				<div class="form-group" ng-class="{ 'has-error': (<%= camelizedSingularName %>Form.$submitted || <%= camelizedSingularName %>Form.nome.$dirty) && <%= camelizedSingularName %>Form.nome.$invalid }">
 					<label class="control-label" for="nome">Nome</label>
 					<div class="controls">
 						<input name="nome" type="text" data-ng-model="nome" id="nome" class="form-control" placeholder="Nome" required>

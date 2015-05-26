@@ -6,7 +6,9 @@ angular.module('<%= slugifiedPluralName %>').controller('<%= classifiedPluralNam
 		$scope.authentication = Authentication;
 
 		// Create new <%= humanizedSingularName %>
-		$scope.create = function() {
+		$scope.create = function(form) {
+			if(form.$invalid) return;
+			
 			// Create new <%= humanizedSingularName %> object
 			var <%= camelizedSingularName %> = new <%= classifiedPluralName %> ({
 				nome: this.nome
