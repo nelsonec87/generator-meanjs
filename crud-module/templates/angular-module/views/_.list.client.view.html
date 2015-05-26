@@ -4,7 +4,7 @@
         <a data-ng-repeat="<%= camelizedSingularName %> in <%= camelizedPluralName %>" data-ng-href="#!/<%= slugifiedPluralName %>/{{<%= camelizedSingularName %>.id}}" class="list-group-item">
 			<small class="list-group-item-text">
 				Criado em 
-				<span data-ng-bind="<%= camelizedSingularName %>.created | date:'medium'"></span>
+				<span data-ng-bind="<%= camelizedSingularName %>.createdAt | date:'mediumDate'"></span>
 				por
 				<span data-ng-bind="<%= camelizedSingularName %>.User.displayName"></span>
 			</small>
