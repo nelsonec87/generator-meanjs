@@ -1,21 +1,22 @@
 <h3>Editar <%= humanizedSingularName %></h3>
 <section data-ng-controller="<%= classifiedPluralName %>Controller" data-ng-init="findOne()">
     <div class="col-md-12">
-        <form class="form-horizontal" data-ng-submit="update()" novalidate>
-            <fieldset>
+        <div class=" panel panel-default">
+            <form name="<%= camelizedSingularName %>Form" class="panel-body " data-ng-submit="update()" novalidate>
                 <div class="form-group">
                     <label class="control-label" for="nome">Name</label>
                     <div class="controls">
                         <input type="text" data-ng-model="<%= camelizedSingularName %>.nome" id="nome" class="form-control" placeholder="Nome" required>
                     </div>
                 </div>
-                <div class="form-group mt">
-                    <input type="submit" value="Salvar" class="btn btn-default">
+                <hr class="hidden-print">
+                <div class="clearfix">
+                    <input type="submit" value="Salvar" class="btn btn-success pull-right" />
                 </div>
 				<div data-ng-show="error" class="text-danger">
 					<strong data-ng-bind="error"></strong>
 				</div>
-            </fieldset>
+            </div>
         </form>
     </div>
     <br style="clear:both" />
