@@ -15,7 +15,7 @@
 						<label class="control-label" for="nome"><%= campo.label %></label>
 						<div class="controls">
 							<% if(campo.fk) { %>
-							<select name="<%= campo.nome %>" chosen class="chosen-select" style="width:350px;" tabindex="4" ng-model="novo.<%= campo.nome %>" ng-options="p.<%= campo.nome %> as p.<%= campo.fk.label %> for p in <%= campo.fk.entidade %>s" <% if(campo.required) { %> required <% } %>></select>
+							<select name="<%= campo.nome %>" chosen class="chosen-select" style="width:350px;" tabindex="4" ng-model="novo.<%= campo.nome %>" ng-options="p.<%= campo.fk.key || campo.nome %> as p.<%= campo.fk.label %> for p in <%= campo.fk.entidade %>s" <% if(campo.required) { %> required <% } %>></select>
 							<% } else { %>
 							<input name="<%= campo.nome %>" type="text" data-ng-model="novo.<%= campo.nome %>" id="<%= campo.nome %>" class="form-control" placeholder="<%= campo.nome %>" <% if(campo.required) { %> required <% } %>>	
 							<% } %>

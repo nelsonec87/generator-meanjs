@@ -10,8 +10,8 @@ angular.module('<%= dados.minusculo %>').controller('<%= dados.camel %>Controlle
 		$timeout(function () {
 			$scope.<%=campo.fk.entidade%>s = <%=campo.fk.entidade%>.query(function () {
 				$timeout(function () {
-					$scope.<%=campo.fk.entidade%>s.push({<%=campo.fk.label%>: 'nenhum', <%=campo.nome%>: ''});
-					$('.chosen-select').trigger('chosen:updated');
+					$scope.<%=campo.fk.entidade%>s.push({<%=campo.fk.label%>: 'nenhum', <%=campo.fk.key || campo.nome%>: ''});
+					$timeout(function () { $('.chosen-select').trigger('chosen:updated'); });
 				});
 			});
 		}, 200);
