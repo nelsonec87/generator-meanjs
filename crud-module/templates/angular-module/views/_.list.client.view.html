@@ -1,17 +1,51 @@
-<h3><%= humanizedPluralName %></h3>
-<section data-ng-controller="<%= classifiedPluralName %>Controller" data-ng-init="find()">
-   <div class="list-group">
-        <a data-ng-repeat="<%= camelizedSingularName %> in <%= camelizedPluralName %>" data-ng-href="#!/<%= slugifiedPluralName %>/{{<%= camelizedSingularName %>.id}}" class="list-group-item">
-			<small class="list-group-item-text">
-				Criado em 
-				<span data-ng-bind="<%= camelizedSingularName %>.createdAt | date:'mediumDate'"></span>
-				por
-				<span data-ng-bind="<%= camelizedSingularName %>.User.displayName"></span>
-			</small>
-			<h4 class="list-group-item-heading" data-ng-bind="<%= camelizedSingularName %>.nome"></h4>
-        </a>
+<h3></h3>
+<section data-ng-controller="<%=dados.camel%>Controller" data-ng-init="find(); maxlength = 10;" style="clear:both">
+    <br>
+    <div class="ibox-title" style="height:60px;">
+        <h5 style="line-height:27px;">Lista de <%=dados.camel%>s</h5>
+        <div class="ibox-tools">
+            <a ui-sref="index.create<%=dados.camel%>" class="btn btn-primary pull-right">
+		<em class="fa fa-plus-circle fa-fw mr-sm"></em>Novo <%=dados.camel%></a>
+        </div>
     </div>
-    <h4 class="alert alert-purple text-center pv-lg" data-ng-hide="!<%= camelizedPluralName %>.$resolved || <%= camelizedPluralName %>.length">
-    	Nenhum <%= humanizedSingularName %> ainda, quer <a href="/#!/<%= slugifiedPluralName %>/create" class="text-yellow">criar um</a>?
-    </h4>
+    <div class="ibox-content">
+        <div class="row">
+            <div class="form-group col-md-6">
+                <div class="controls">
+                    <input ng-model="termo" class="form-control" placeholder="Pesquisar">
+                </div>
+            </div>
+        </div>
+        <table datatable="ng" class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <% _.each(dados.campos, function(campo) { %>
+                    <th><%=campo.label%></th>
+                    <% }); %>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="p in (filtered = (<%=dados.minusculo%>|filter:termo))|limitTo:maxlength" ui-sref="index.edit<%=dados.camel%>({<%=dados.minusculo%>Id: p.<%=dados.pk%>})">
+                    <% _.each(dados.campos, function(campo) { %>
+                    <td>{{ p.<%=campo.nome%> }}</td>
+                    <% }); %>
+                </tr>
+            </tbody>
+        </table>
+        <button class="btn btn-primary" ng-show="filtered.length > maxlength" ng-click="maxlength = maxlength + 10">Mostrar mais</button>
+        <button class="btn btn-primary" ng-show="maxlength > 10" ng-click="maxlength = maxlength - 10">Mostrar menos</button>
+        <br style="clear:both" />
+        <br />
+        <br />
+    </div>
+    <h4 class="alert alert-purple text-center pv-lg" data-ng-hide="!<%=dados.minusculo%>.$resolved || <%=dados.minusculo%>.length">Nenhum <%=dados.camel%> ainda, quer
+        <a ui-sref="index.create<%=dados.camel%>" class="text-yellow">criar um</a>?</h4>
 </section>
+<style>
+    .dataTables_length, .dataTables_filter{display: inline-block; margin-right: 10px;}
+    .dataTables_paginate a{margin:0 5px}
+    .dataTables_info, .dataTables_length{display:none}
+    tbody tr{cursor:pointer}
+    .dataTables_filter{font-size: 0}
+    .dataTables_filter input{font-size: 14px}
+</style>

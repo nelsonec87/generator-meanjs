@@ -1,21 +1,35 @@
-<h3>Novo <%= humanizedSingularName %></h3>
-<section data-ng-controller="<%= classifiedPluralName %>Controller">
-       <div class="col-md-12">
-        <form name="<%= camelizedSingularName %>Form" class="form-horizontal" data-ng-submit="create(<%= camelizedSingularName %>Form)" novalidate>
-			<fieldset>
-				<div class="form-group" ng-class="{ 'has-error': (<%= camelizedSingularName %>Form.$submitted || <%= camelizedSingularName %>Form.nome.$dirty) && <%= camelizedSingularName %>Form.nome.$invalid }">
-					<label class="control-label" for="nome">Nome</label>
-					<div class="controls">
-						<input name="nome" type="text" data-ng-model="nome" id="nome" class="form-control" placeholder="Nome" required>
+<h3>
+		<div class="pull-right"></div></h3>
+<section data-ng-controller="<%= dados.camel %>Controller">
+    <div class="col-md-12">
+        <form name="<%= dados.minusculo %>Form" data-ng-submit="create(<%= dados.minusculo %>Form)" novalidate>
+			<div class="ibox-title">
+					<h5>Nova <%= dados.camel %></h5>
+					<div class="ibox-tools">
+						
 					</div>
 				</div>
-				<div class="form-group mt">
-					<input type="submit" class="btn btn-default">
-				</div>
-				<div data-ng-show="error" class="text-danger">
-					<strong data-ng-bind="error"></strong>
-				</div>
-			</fieldset>
+				<fieldset class="ibox-content">
+					<% _.each(dados.campos, function(campo) { %> 
+					<div class="form-group" ng-class="{ 'has-error': (<%= dados.minusculo %>Form.$submitted || <%= dados.minusculo %>Form.<%= campo.nome %>.$dirty) && <%= dados.minusculo %>Form.<%= campo.nome %>.$invalid }">
+						<label class="control-label" for="nome"><%= campo.label %></label>
+						<div class="controls">
+							<% if(campo.fk) { %>
+							<select name="<%= campo.nome %>" chosen class="chosen-select" style="width:350px;" tabindex="4" ng-model="novo.codConfUF" ng-options="p.<%= campo.nome %> as p.<%= campo.fk.label %> for p in <%= campo.fk.entidade %>s" <% if(campo.required) { %> required <% } %>></select>
+							<% } else { %>
+							<input name="<%= campo.nome %>" type="text" data-ng-model="novo.<%= campo.nome %>" id="<%= campo.nome %>" class="form-control" placeholder="<%= campo.nome %>" <% if(campo.required) { %> required <% } %>>	
+							<% } %>
+						</div>
+					</div>
+					<% }); %>
+					
+					<div ng-show="error" class="text-danger">
+						<strong ng-bind="error"></strong>
+					</div>
+					<div class="form-group mt">
+						<input type="submit" value="Salvar" class="btn btn-primary">
+					</div>
+				</fieldset>
 		</form>
     </div>
 	<br style="clear:both" />

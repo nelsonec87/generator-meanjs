@@ -1,26 +1,25 @@
 'use strict';
 
 //Setting up route
-angular.module('<%= slugifiedPluralName %>').config(['$stateProvider',
+angular.module('<%= dados.minusculo %>').config(['$stateProvider',
 	function($stateProvider) {
-		// <%= humanizedPluralName %> state routing
 		$stateProvider.
-		state('app.list<%= classifiedPluralName %>', {
-			url: '/<%= slugifiedPluralName %>',
-			templateUrl: 'modules/<%= slugifiedPluralName %>/views/list-<%= slugifiedPluralName %>.client.view.html'
+		state('index.list<%= dados.camel %>', {
+			url: '/<%= dados.minusculo %>',
+			templateUrl: 'js/modules/<%= dados.minusculo %>/views/list-<%= dados.minusculo %>.client.view.html'
 		}).
-		state('app.create<%= classifiedSingularName %>', {
-			url: '/<%= slugifiedPluralName %>/create',
-			templateUrl: 'modules/<%= slugifiedPluralName %>/views/create-<%= slugifiedSingularName %>.client.view.html'
+		state('index.create<%= dados.camel %>', {
+			url: '/<%= dados.minusculo %>/create',
+			templateUrl: 'js/modules/<%= dados.minusculo %>/views/create-<%= dados.minusculo %>.client.view.html'
 		}).
-		state('app.view<%= classifiedSingularName %>', {
-			url: '/<%= slugifiedPluralName %>/:<%= camelizedSingularName %>Id',
-			templateUrl: 'modules/<%= slugifiedPluralName %>/views/view-<%= slugifiedSingularName %>.client.view.html',
-			controller: '<%= classifiedPluralName %>Controller'
+		state('index.view<%= dados.camel %>', {
+			url: '/<%= dados.minusculo %>/:<%= dados.minusculo %>Id',
+			templateUrl: 'js/modules/<%= dados.minusculo %>/views/view-<%= dados.minusculo %>.client.view.html',
+			controller: '<%= dados.camel %>Controller'
 		}).
-		state('app.edit<%= classifiedSingularName %>', {
-			url: '/<%= slugifiedPluralName %>/:<%= camelizedSingularName %>Id/edit',
-			templateUrl: 'modules/<%= slugifiedPluralName %>/views/edit-<%= slugifiedSingularName %>.client.view.html'
+		state('index.edit<%= dados.camel %>', {
+			url: '/<%= dados.minusculo %>/:<%= dados.minusculo %>Id/edit',
+			templateUrl: 'js/modules/<%= dados.minusculo %>/views/edit-<%= dados.minusculo %>.client.view.html'
 		});
 	}
 ]);

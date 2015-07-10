@@ -1,11 +1,9 @@
 'use strict';
 
 // Configuring the new module
-angular.module('<%= slugifiedPluralName %>').run(['Menus',
-	function(Menus) {
-		// Set top bar menu items
-		Menus.addMenuItem('<%= menuId %>', '<%= humanizedPluralName %>', '<%= slugifiedPluralName %>', 'dropdown', '/<%= slugifiedPluralName %>(/create)?');
-		Menus.addSubMenuItem('<%= menuId %>', '<%= slugifiedPluralName %>', 'Listar <%= humanizedPluralName %>', '<%= slugifiedPluralName %>');
-		Menus.addSubMenuItem('<%= menuId %>', '<%= slugifiedPluralName %>', 'Novo <%= humanizedSingularName %>', '<%= slugifiedPluralName %>/create');
+angular.module('<%= dados.minusculo %>').run(['$rootScope',
+	function($rootScope) {
+		$rootScope.menus = $rootScope.menus || [];
+		$rootScope.menus.push({label: '<%= dados.menu %>', sref: 'index.list<%= dados.camel %>'});
 	}
 ]);
