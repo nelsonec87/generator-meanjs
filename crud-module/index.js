@@ -6,7 +6,7 @@ var util = require('util'),
 
 var ModuleGenerator = yeoman.generators.NamedBase.extend({
 	init: function () {
-		eval('this.dados=' + fs.readFileSync(this.name + '.js', 'utf8'));
+		eval('this.dados=' + fs.readFileSync('generators/' + this.name + '.js', 'utf8'));
 		// this.dados = obj;
 	},
 
