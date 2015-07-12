@@ -26,9 +26,9 @@ angular.module('<%= dados.minusculo %>').controller('<%= dados.camel %>Controlle
 
 			// Redirect after save
 			<%= dados.minusculo %>.$save({ JSON: JSON.stringify(<%= dados.minusculo %>) }, function (response) {
-				$location.path('index/<%= dados.minusculo %>/' + response.codConf<%= dados.camel %> + '/edit');
+				$location.path('index/<%=dados.menu.url%>/<%= dados.minusculo %>/' + response.<%= dados.pk %> + '/edit');
 				alert('Registro salvo!');
-				$location.path('index/<%= dados.minusculo %>');
+				$location.path('index/<%=dados.menu.url%>/<%= dados.minusculo %>');
 			}, function (errorResponse) {
 				$scope.error = errorResponse.data.error;
 				console.log(errorResponse.data.error);
@@ -38,8 +38,8 @@ angular.module('<%= dados.minusculo %>').controller('<%= dados.camel %>Controlle
 		// Remove existing <%= dados.camel %>
 		$scope.remove = function (<%= dados.minusculo %>) {
 			if (confirm('Confirma Exclusão?'))
-				$scope.<%= dados.minusculo %>.$remove({ codConf<%= dados.camel %>: <%= dados.minusculo %>.codConf<%= dados.camel %> }, function () {
-					$location.path('index/<%= dados.minusculo %>');
+				$scope.<%= dados.minusculo %>.$remove({ <%= dados.pk %>: <%= dados.minusculo %>.<%= dados.pk %> }, function () {
+					$location.path('index/<%=dados.menu.url%>/<%= dados.minusculo %>');
 				});
 		};
 
@@ -48,7 +48,7 @@ angular.module('<%= dados.minusculo %>').controller('<%= dados.camel %>Controlle
 			var <%= dados.minusculo %> = $scope.<%= dados.minusculo %>;
 			<%= dados.minusculo %>.$save({ JSON: JSON.stringify(<%= dados.minusculo %>) }, function () {
 				alert('Registro salvo!');
-				$location.path('index/<%= dados.minusculo %>');
+				$location.path('index/<%=dados.menu.url%>/<%= dados.minusculo %>');
 			}, function (errorResponse) {
 				$scope.error = errorResponse.data.error;
 			});
@@ -62,7 +62,7 @@ angular.module('<%= dados.minusculo %>').controller('<%= dados.camel %>Controlle
 		// Find existing <%= dados.camel %>
 		$scope.findOne = function () {
 			$scope.<%= dados.minusculo %> = <%= dados.camel %>.get({
-				codConf<%= dados.camel %>: $stateParams.<%= dados.minusculo %>Id
+				<%= dados.pk %>: $stateParams.<%= dados.minusculo %>Id
 			});
 		};
 	}

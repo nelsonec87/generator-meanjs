@@ -4,7 +4,7 @@
     <div class="ibox-title" style="height:60px;">
         <h5 style="line-height:27px;">Lista de <%=dados.camel%>s</h5>
         <div class="ibox-tools">
-            <a ui-sref="index.create<%=dados.camel%>" class="btn btn-primary pull-right">
+            <a ui-sref="index.<%=dados.menu.url%>.create<%=dados.camel%>" class="btn btn-primary pull-right">
 		<em class="fa fa-plus-circle fa-fw mr-sm"></em>Novo <%=dados.camel%></a>
         </div>
     </div>
@@ -25,7 +25,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="p in (filtered = (<%=dados.minusculo%>|filter:termo))|limitTo:maxlength" ui-sref="index.edit<%=dados.camel%>({<%=dados.minusculo%>Id: p.<%=dados.pk%>})">
+                <tr ng-repeat="p in (filtered = (<%=dados.minusculo%>|filter:termo))|limitTo:maxlength" ui-sref="index.<%=dados.menu.url%>.edit<%=dados.camel%>({<%=dados.minusculo%>Id: p.<%=dados.pk%>})">
                     <% _.each(dados.campos, function(campo) { %>
                     <td>{{ p.<%=campo.nome%> }}</td>
                     <% }); %>
@@ -39,7 +39,7 @@
         <br />
     </div>
     <h4 class="alert alert-purple text-center pv-lg" data-ng-hide="!<%=dados.minusculo%>.$resolved || <%=dados.minusculo%>.length">Nenhum <%=dados.camel%> ainda, quer
-        <a ui-sref="index.create<%=dados.camel%>" class="text-yellow">criar um</a>?</h4>
+        <a ui-sref="index.<%=dados.menu.url%>.create<%=dados.camel%>" class="text-yellow">criar um</a>?</h4>
 </section>
 <style>
     .dataTables_length, .dataTables_filter{display: inline-block; margin-right: 10px;}
