@@ -1,5 +1,3 @@
-'use strict';
-
 //Setting up route
 angular.module('<%= dados.minusculo %>').config(['$stateProvider',
 	function($stateProvider) {

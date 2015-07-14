@@ -1,22 +1,23 @@
 /// <reference path="../../../../typings/jquery/jquery.d.ts"/>
 
 // <%= dados.camel %> controller
-angular.module('<%= dados.minusculo %>').controller('<%= dados.camel %>Controller', ['$scope', '$stateParams', '$location', '<%= dados.camel %>', <% _.each(dados.campos, function(campo) { if(campo.fk) { %> '<%=campo.fk.entidade%>',<% } }); %> '$timeout',
-	function ($scope, $stateParams, $location, <%= dados.camel %>, <% _.each(dados.campos, function(campo) { if(campo.fk) { %> <%=campo.fk.entidade%>,<% } }); %> $timeout) {
+angular.module('<%= dados.minusculo %>').controller('<%= dados.camel %>Controller', ['$rootScope','$scope', '$stateParams', '$location', '<%= dados.camel %>', <% _.each(dados.campos, function(campo) { if(campo.fk) { %> '<%=campo.fk.entidade%>',<% } }); %> '$timeout',
+	function ($rootScope, $scope, $stateParams, $location, <%= dados.camel %>, <% _.each(dados.campos, function(campo) { if(campo.fk) { %> <%=campo.fk.entidade%>,<% } }); %> $timeout) {
 		$scope.novo = {};
 		$scope.msg = {};
 		
-		<% _.each(dados.campos, function(campo) { if(campo.fk) { %>
-		$timeout(function () {
-			$scope.<%=campo.fk.entidade%>s = <%=campo.fk.entidade%>.query(function () {
-				$timeout(function () {
-					$scope.<%=campo.fk.entidade%>s.push({<%=campo.fk.label%>: 'nenhum', <%=campo.fk.key || campo.nome%>: ''});
-					$timeout(function () { $('.chosen-select').trigger('chosen:updated'); });
+		if(!~$rootScope.$state.current.name.indexOf(".list")){
+			<% var timer = 0; _.each(dados.campos, function(campo) { if(campo.fk) { timer += 200; %>
+			$timeout(function () {
+				$scope.<%=campo.fk.entidade%>s = <%=campo.fk.entidade%>.query(function () {
+					$timeout(function () {
+						$scope.<%=campo.fk.entidade%>s.push({<%=campo.fk.label%>: 'nenhum', <%=campo.fk.key || campo.nome%>: ''});
+						$timeout(function () { $('.chosen-select').trigger('chosen:updated'); });
+					});
 				});
-			});
-		}, 200);
-		<% } }) %>
-		
+			}, <%= timer%>);
+			<% } }) %>
+		}
 		// Create new <%= dados.camel %>
 		$scope.create = function (form) {
 			if (form.$invalid) return;

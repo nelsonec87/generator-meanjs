@@ -1,5 +1,3 @@
-'use strict';
-
 // Configuring the new module
 angular.module('<%= dados.minusculo %>').run(['$rootScope',
 	function($rootScope) {
