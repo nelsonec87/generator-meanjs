@@ -27,7 +27,7 @@ angular.module('<%= dados.minusculo %>').controller('<%= dados.camel %>Controlle
 
 			// Redirect after save
 			<%= dados.minusculo %>.$save({ JSON: JSON.stringify(<%= dados.minusculo %>) }, function (response) {
-				$location.path('index/<%=dados.menu.url%>/<%= dados.minusculo %>/' + response.<%= dados.pk %> + '/edit');
+				// $location.path('index/<%=dados.menu.url%>/<%= dados.minusculo %>/' + response.<%= dados.pk %> + '/edit');
 				alert('Registro salvo!');
 				$location.path('index/<%=dados.menu.url%>/<%= dados.minusculo %>');
 			}, function (errorResponse) {
