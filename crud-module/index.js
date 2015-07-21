@@ -9,15 +9,19 @@ var ModuleGenerator = yeoman.generators.NamedBase.extend({
 		this.todos = [];
 		var arquivos = fs.readdirSync('generators');
 
-		for (var i in arquivos)
-			eval('this.todos.push(' + fs.readFileSync('generators/' + arquivos[i] , 'utf8') + ')');
+		for (var i in arquivos){
+		
+		console.log('-',arquivos[i], !!~arquivos[i].indexOf('.js'))
+			if (~arquivos[i].indexOf('.js'))
+				eval('this.todos.push(' + fs.readFileSync('generators/' + arquivos[i], 'utf8') + ')');
+		}
 	},
 
 	renderModule: function () {
 		// Create module folder
 		for (var i in this.todos) {
 			this.dados = this.todos[i];
-			
+
 			this.mkdir('js/modules/' + this.dados.minusculo);
 
 			// Render angular module files
