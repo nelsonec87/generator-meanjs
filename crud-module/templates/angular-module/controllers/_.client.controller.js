@@ -1,8 +1,9 @@
 'use strict';
 
 // <%= humanizedPluralName %> controller
-angular.module('<%= slugifiedPluralName %>').controller('<%= classifiedPluralName %>Controller', ['$scope', '$stateParams', '$location', 'Authentication', '<%= classifiedPluralName %>',
-	function($scope, $stateParams, $location, Authentication, <%= classifiedPluralName %>) {
+angular.module('<%= slugifiedPluralName %>').controller('<%= classifiedPluralName %>Controller', ['$scope', '$stateParams', '$location', 'Authentication', 
+	'<%= classifiedPluralName %>', <% _.each(tables, function(t){%>'<%=t.entity%>', <%});%>
+	function($scope, $stateParams, $location, Authentication, <%= classifiedPluralName %><% _.each(tables, function(t){%>, <%=t.entity%><%});%>) {
 		$scope.authentication = Authentication;
 
 		// Create new <%= humanizedSingularName %>
@@ -24,7 +25,7 @@ angular.module('<%= slugifiedPluralName %>').controller('<%= classifiedPluralNam
 				$scope.error = errorResponse.data.message;
 			});
 		};
-
+		
 		// Remove existing <%= humanizedSingularName %>
 		$scope.remove = function(<%= camelizedSingularName %>) {
 			if ( <%= camelizedSingularName %> ) { 
@@ -63,6 +64,10 @@ angular.module('<%= slugifiedPluralName %>').controller('<%= classifiedPluralNam
 			$scope.<%= camelizedSingularName %> = <%= classifiedPluralName %>.get({ 
 				<%= camelizedSingularName %>Id: $stateParams.<%= camelizedSingularName %>Id
 			});
+			
+			<% _.each(tables, function(t){%>
+			$scope.<%=t.list%> = <%=t.entity%>.by<%=classifiedSingularName%>({ <%= camelizedSingularName %> : $stateParams.<%= camelizedSingularName %>Id });
+			<% });%>
 		};
 	}
 ]);

@@ -1,19 +1,23 @@
 'use strict';
 
-
 module.exports = function (sequelize, DataTypes) {
 	return sequelize.define('<%= classifiedSingularName %>', {
-		nome: {
-			type: DataTypes.STRING,
-			allowNull: false,
-			validate: { notEmpty: { msg: 'Nome é obrigatório' } }
-		}
+		<% _.each(fields, function(field, name) { %>
+		<%=name%>: {
+			type: <%=tipos[field.type]%>,
+			allowNull: <%=field.allowNull%>,
+			validate: <%= JSON.stringify(field.validate)%>,
+		},
+		<% });%>
 	}, {
 			classMethods: {
 				associate: function (models) {
 					models.<%= classifiedSingularName %>.belongsTo(models.User, {
 						onDelete: 'CASCADE',
 					});
+					<% _.each(hasMany, function(m){ %>
+					models.<%= classifiedSingularName %>.hasMany(models.<%=m%>);
+					<% });%>
 				}
 			}
 		});

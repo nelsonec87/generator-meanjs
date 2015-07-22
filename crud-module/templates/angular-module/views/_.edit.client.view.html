@@ -3,12 +3,37 @@
     <div class="col-md-12">
         <div class=" panel panel-default">
             <form name="<%= camelizedSingularName %>Form" class="panel-body " data-ng-submit="update()" novalidate>
-                <div class="form-group">
-                    <label class="control-label" for="nome">Name</label>
-                    <div class="controls">
-                        <input type="text" data-ng-model="<%= camelizedSingularName %>.nome" id="nome" class="form-control" placeholder="Nome" required>
-                    </div>
-                </div>
+                <% _.each(fields, function(field, name) { 
+                     if(field.type == 'string') { %>    
+                        <field-text label="<%=field.label%>" field="<%=name%>" form="<%= camelizedSingularName %>Form" model="<%= camelizedSingularName %>" <%= (field.allowNull ? '' : 'required') %>></field-text>
+                    <% } 
+                     if(field.type == 'date') { %>    
+                        <field-date label="<%=field.label%>" field="<%=name%>" form="<%= camelizedSingularName %>Form" model="<%= camelizedSingularName %>" <%= (field.allowNull ? '' : 'required') %> format="format" is-open="opened"
+		              		datepicker-options="dateOptions"></field-date> 
+                    <% } 
+                 }); %>
+                 
+                 <% _.each(tables, function(t){ %>
+                 	<div class="form-group">
+						<label class="control-label"><%=t.label%></label>
+						<div class="controls">
+							<table datatable="ng" class="table table-striped table-bordered table-hover">
+								<thead>
+									<tr>
+                                        <% _.each(t.columns, function(c){ %><th><%=c.label%></th>
+                                        <% });%>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="x in setores" ui-sref="<%=t.sref%>">
+										<% _.each(t.columns, function(c){ %><td>{{x.<%=c.name%>}}</td>
+                                        <% });%>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+                 <% });%>
                 <hr class="hidden-print">
                 <div class="clearfix">
                     <input type="submit" value="Salvar" class="btn btn-success pull-right" />
@@ -16,8 +41,8 @@
 				<div data-ng-show="error" class="text-danger">
 					<strong data-ng-bind="error"></strong>
 				</div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
     <br style="clear:both" />
 </section>
