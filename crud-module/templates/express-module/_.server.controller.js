@@ -79,6 +79,20 @@ exports.list = function(req, res) {
 	});
 };
 
+<% _.each(queries, function(q){%>
+exports.<%=q.name%> = function(req, res) { 
+	<%= classifiedSingularName %>.findAll(
+		<%=q.filter%>
+	).then(function(<%= camelizedPluralName %>) {
+		res.jsonp(<%= camelizedPluralName %>);
+	}).catch(function(err){
+		return res.status(400).send({
+			message: errorHandler.getErrorMessage(err)
+		});
+	});
+};
+<%});%>
+
 /**
  * <%= humanizedSingularName %> middleware
  */

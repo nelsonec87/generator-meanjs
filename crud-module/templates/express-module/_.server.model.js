@@ -15,6 +15,9 @@ module.exports = function (sequelize, DataTypes) {
 					models.<%= classifiedSingularName %>.belongsTo(models.User, {
 						onDelete: 'CASCADE',
 					});
+					<% _.each(belongsTo, function(m){ %>
+					 models.<%= classifiedSingularName %>.belongsTo(models.<%=m%>, { onDelete: 'CASCADE' });
+					<% });%>
 					<% _.each(hasMany, function(m){ %>
 					models.<%= classifiedSingularName %>.hasMany(models.<%=m%>);
 					<% });%>

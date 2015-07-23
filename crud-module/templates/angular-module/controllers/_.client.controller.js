@@ -17,8 +17,11 @@ angular.module('<%= slugifiedPluralName %>').controller('<%= classifiedPluralNam
 
 			// Redirect after save
 			<%= camelizedSingularName %>.$save(function(response) {
+				<% if(saveAction) { %>
+				$location.path(<%=saveAction%>);
+				<% } else { %>
 				$location.path('<%= slugifiedPluralName %>/' + response.id);
-
+				<% } %>
 				// Clear form fields
 				$scope.nome = '';
 			}, function(errorResponse) {
@@ -38,7 +41,11 @@ angular.module('<%= slugifiedPluralName %>').controller('<%= classifiedPluralNam
 				}
 			} else {
 				$scope.<%= camelizedSingularName %>.$remove(function() {
-					$location.path('<%= slugifiedPluralName %>');
+					<% if(saveAction) { %>
+					$location.path(<%=saveAction%>);
+					<% } else { %>
+					$location.path('<%= slugifiedPluralName %>/' + response.id);
+					<% } %>
 				});
 			}
 		};
@@ -48,7 +55,11 @@ angular.module('<%= slugifiedPluralName %>').controller('<%= classifiedPluralNam
 			var <%= camelizedSingularName %> = $scope.<%= camelizedSingularName %>;
 
 			<%= camelizedSingularName %>.$update(function() {
+				<% if(saveAction) { %>
+				$location.path(<%=saveAction%>);
+				<% } else { %>
 				$location.path('<%= slugifiedPluralName %>/' + <%= camelizedSingularName %>.id);
+				<% } %>
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});

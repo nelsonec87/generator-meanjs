@@ -6,7 +6,8 @@ var util = require('util'),
 
 var fields = ['slugifiedPluralName', 'slugifiedSingularName', 'camelizedPluralName', 'camelizedSingularName',
 	'classifiedPluralName', 'classifiedSingularName', 'humanizedPluralName', 'humanizedSingularName',
-	'menuId', 'addMenuItems', 'fields', 'hasMany', 'tables'];
+	'menuId', 'addMenuItems', 'fields', 'hasMany', 'tables', 'belongsTo', 'resource','routes', 'queries',
+	'saveAction'];
 
 var ModuleGenerator = yeoman.generators.NamedBase.extend({
 	init: function () {

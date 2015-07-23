@@ -13,6 +13,12 @@ module.exports = function(app) {
 		.get(<%= camelizedPluralName %>.read)
 		.put(users.requiresLogin, <%= camelizedPluralName %>.hasAuthorization, <%= camelizedPluralName %>.update)
 		.delete(users.requiresLogin, <%= camelizedPluralName %>.hasAuthorization, <%= camelizedPluralName %>.delete);
+	
+	<% _.each(routes, function(r){ %>
+	app.route('<%=r.route%>')
+		<% _.each(r.actions, function(a){ %>.<%=a.method%>(<%=a.func%>)
+		<%});%>;
+	<%});%>
 
 	// Finish by binding the <%= humanizedSingularName %> middleware
 	app.param('<%= camelizedSingularName %>Id', <%= camelizedPluralName %>.<%= camelizedSingularName %>ByID);
